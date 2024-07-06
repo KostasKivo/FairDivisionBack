@@ -4,11 +4,9 @@ import com.kivotos.fairdivision.dto.WebsiteInputDTO;
 import com.kivotos.fairdivision.model.FairDivisionInput;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface FairDivisionInputMapper {
-    FairDivisionInputMapper INSTANCE = Mappers.getMapper(FairDivisionInputMapper.class);
 
     @Mapping(target = "agentNumber", source = "agentSliderValue")
     @Mapping(target = "goodsNumber", source = "goodsSliderValue")
@@ -16,13 +14,6 @@ public interface FairDivisionInputMapper {
     @Mapping(target = "algorithmId", source = "algorithmDropdownValue")
     @Mapping(target = "valuationMatrix", expression = "java(convertValuations(dto.getValuationContainer(), dto.getAgentSliderValue(), dto.getGoodsSliderValue()))")
     FairDivisionInput toFairDivisionInput(WebsiteInputDTO dto);
-
-    @Mapping(target = "agentSliderValue", source = "agentNumber")
-    @Mapping(target = "goodsSliderValue", source = "goodsNumber")
-    @Mapping(target = "valuationDropdownValue", source = "valuationType")
-    @Mapping(target = "algorithmDropdownValue", source = "algorithmId")
-    @Mapping(target = "valuationContainer", expression = "java(convertMatrixToString(dto.getValuationMatrix()))")
-    WebsiteInputDTO toWebsiteInputDTO(FairDivisionInput dto);
 
     default int[][] convertValuations(String valuations, int agentNumber, int goodsNumber)  {
         String[] values = valuations.split(",");

@@ -7,6 +7,7 @@ import java.util.List;
 @Data
 public class ValuationChecker {
 
+
     private static int[][] valuationMatrix;
 
     public ValuationChecker(int[][] valuationMatrix) {
@@ -21,5 +22,9 @@ public class ValuationChecker {
         }
 
         return totalValue;
+    }
+
+    public static void setValuationMatrix(int[][] valuationMatrix) {
+        ValuationChecker.valuationMatrix = valuationMatrix;
     }
 }

@@ -8,6 +8,7 @@ import com.kivotos.fairdivision.mapper.FairDivisionInputMapper;
 import com.kivotos.fairdivision.mapper.FairDivisionOutputMapper;
 import com.kivotos.fairdivision.model.FairDivisionInput;
 import com.kivotos.fairdivision.model.FairDivisionOutput;
+import com.kivotos.fairdivision.util.ValuationChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,8 @@ public class FairDivisionService {
         FairDivisionInput fairDivisionInput = fairDivisionInputMapper.toFairDivisionInput(websiteInputDTO);
 
         FairDivisionAlgorithm algorithm = FairDivisionAlgorithmFactory.getAlgorithm(fairDivisionInput.getAlgorithmId());
+
+        ValuationChecker.setValuationMatrix(fairDivisionInput.getValuationMatrix());
 
         FairDivisionOutput output = algorithm.allocate(fairDivisionInput.getAgentNumber(), fairDivisionInput.getGoodsNumber(), fairDivisionInput.getValuationMatrix());
 
