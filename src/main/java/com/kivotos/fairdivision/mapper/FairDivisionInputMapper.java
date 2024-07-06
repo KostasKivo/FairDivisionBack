@@ -25,8 +25,6 @@ public interface FairDivisionInputMapper {
 
     default int[][] convertValuations(String valuations, int agentNumber, int goodsNumber)  {
         String[] values = valuations.split(",");
-        int expectedSize = agentNumber * goodsNumber;
-        int actualSize = values.length;
 
 
         int[][] matrix = new int[agentNumber][goodsNumber];
