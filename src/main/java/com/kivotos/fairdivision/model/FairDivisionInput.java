@@ -7,5 +7,6 @@ public class FairDivisionInput {
     private int agentNumber;
     private int goodsNumber;
     private int valuationType;
+    private int algorithmId;
     private int[][] valuationMatrix;
 }

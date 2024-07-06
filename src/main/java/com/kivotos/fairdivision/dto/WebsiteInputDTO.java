@@ -13,6 +13,6 @@ public class WebsiteInputDTO {
     private int agentSliderValue;
     private int goodsSliderValue;
     private int valuationDropdownValue;
+    private int algorithmDropdownValue;
     private String valuationContainer;
-    private String errorMessage;
 }

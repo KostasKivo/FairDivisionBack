@@ -1,16 +1,17 @@
-package com.kivotos.fairdivision.util;
+package com.kivotos.fairdivision.algorithms;
 
 import com.kivotos.fairdivision.model.Allocation;
+import com.kivotos.fairdivision.model.FairDivisionOutput;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class FairDivisionAlgorithms {
+public class RoundRobinAlgorithm implements FairDivisionAlgorithm {
 
-    public static List<Allocation> RoundRobin(int agents, int goods, int [][] valuationMatrix) {
-
+    @Override
+    public FairDivisionOutput allocate(int agents, int goods, int[][] valuationMatrix) {
         // Initialize allocations for each agent
         List<Allocation> allocationsList = new ArrayList<>();
         for (int i = 0; i < agents; i++) {
@@ -42,8 +43,6 @@ public class FairDivisionAlgorithms {
             availableGoods.remove(selectedGood);
         }
 
-        return allocationsList;
+        return new FairDivisionOutput(allocationsList);
     }
-
-
 }

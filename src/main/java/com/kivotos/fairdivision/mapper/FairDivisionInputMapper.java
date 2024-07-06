@@ -13,13 +13,14 @@ public interface FairDivisionInputMapper {
     @Mapping(target = "agentNumber", source = "agentSliderValue")
     @Mapping(target = "goodsNumber", source = "goodsSliderValue")
     @Mapping(target = "valuationType", source = "valuationDropdownValue")
+    @Mapping(target = "algorithmId", source = "algorithmDropdownValue")
     @Mapping(target = "valuationMatrix", expression = "java(convertValuations(dto.getValuationContainer(), dto.getAgentSliderValue(), dto.getGoodsSliderValue()))")
     FairDivisionInput toFairDivisionInput(WebsiteInputDTO dto);
 
     @Mapping(target = "agentSliderValue", source = "agentNumber")
     @Mapping(target = "goodsSliderValue", source = "goodsNumber")
     @Mapping(target = "valuationDropdownValue", source = "valuationType")
-    @Mapping(target = "message", ignore = true)
+    @Mapping(target = "algorithmDropdownValue", source = "algorithmId")
     @Mapping(target = "valuationContainer", expression = "java(convertMatrixToString(dto.getValuationMatrix()))")
     WebsiteInputDTO toWebsiteInputDTO(FairDivisionInput dto);
 
