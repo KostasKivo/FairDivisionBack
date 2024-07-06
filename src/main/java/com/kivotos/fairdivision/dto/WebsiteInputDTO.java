@@ -14,5 +14,5 @@ public class WebsiteInputDTO {
     private int goodsSliderValue;
     private int valuationDropdownValue;
     private String valuationContainer;
-    private String message;
+    private String errorMessage;
 }

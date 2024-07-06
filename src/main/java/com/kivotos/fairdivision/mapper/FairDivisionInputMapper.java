@@ -1,7 +1,6 @@
 package com.kivotos.fairdivision.mapper;
 
 import com.kivotos.fairdivision.dto.WebsiteInputDTO;
-import com.kivotos.fairdivision.exception.InsufficientValuationsException;
 import com.kivotos.fairdivision.model.FairDivisionInput;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,7 +14,7 @@ public interface FairDivisionInputMapper {
     @Mapping(target = "goodsNumber", source = "goodsSliderValue")
     @Mapping(target = "valuationType", source = "valuationDropdownValue")
     @Mapping(target = "valuationMatrix", expression = "java(convertValuations(dto.getValuationContainer(), dto.getAgentSliderValue(), dto.getGoodsSliderValue()))")
-    FairDivisionInput toFairDivisionInput(WebsiteInputDTO dto) throws InsufficientValuationsException;
+    FairDivisionInput toFairDivisionInput(WebsiteInputDTO dto);
 
     @Mapping(target = "agentSliderValue", source = "agentNumber")
     @Mapping(target = "goodsSliderValue", source = "goodsNumber")
@@ -24,15 +23,11 @@ public interface FairDivisionInputMapper {
     @Mapping(target = "valuationContainer", expression = "java(convertMatrixToString(dto.getValuationMatrix()))")
     WebsiteInputDTO toWebsiteInputDTO(FairDivisionInput dto);
 
-    default int[][] convertValuations(String valuations, int agentNumber, int goodsNumber) throws InsufficientValuationsException {
+    default int[][] convertValuations(String valuations, int agentNumber, int goodsNumber)  {
         String[] values = valuations.split(",");
         int expectedSize = agentNumber * goodsNumber;
         int actualSize = values.length;
 
-
-        if (actualSize != expectedSize) {
-            throw new InsufficientValuationsException("The number of valuations must be equal to " + agentNumber * goodsNumber + ".");
-        }
 
         int[][] matrix = new int[agentNumber][goodsNumber];
         for (int i = 0; i < agentNumber; i++) {

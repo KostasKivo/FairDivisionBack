@@ -2,7 +2,6 @@ package com.kivotos.fairdivision.controller;
 
 
 import com.kivotos.fairdivision.dto.WebsiteInputDTO;
-import com.kivotos.fairdivision.exception.InsufficientValuationsException;
 import com.kivotos.fairdivision.mapper.FairDivisionInputMapper;
 import com.kivotos.fairdivision.model.Allocation;
 import com.kivotos.fairdivision.model.FairDivisionInput;
@@ -27,7 +26,6 @@ public class SideBarController {
     @PostMapping(value = "/submit")
     public ResponseEntity<WebsiteInputDTO> submitInput(@RequestBody WebsiteInputDTO websiteInputDTO) {
 
-        try {
             FairDivisionInput fairDivisionInput = FairDivisionInputMapper.INSTANCE.toFairDivisionInput(websiteInputDTO);
             System.out.println(fairDivisionInput.toString());
 
@@ -44,12 +42,6 @@ public class SideBarController {
 
 
             return ResponseEntity.ok(websiteInputDTO);
-
-        } catch (InsufficientValuationsException ex) {
-            WebsiteInputDTO x = new WebsiteInputDTO();
-            x.setMessage(ex.getMessage());
-            return ResponseEntity.badRequest().body(x);
-        }
     }
 
 }
