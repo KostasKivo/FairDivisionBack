@@ -1,5 +1,6 @@
 package com.kivotos.fairdivision.algorithms.factory;
 
+import com.kivotos.fairdivision.algorithms.EnvyCycleEliminationAlgorithm;
 import com.kivotos.fairdivision.algorithms.FairDivisionAlgorithm;
 import com.kivotos.fairdivision.algorithms.RoundRobinAlgorithm;
 
@@ -9,7 +10,8 @@ public class FairDivisionAlgorithmFactory {
         switch (algorithmId) {
             case 1:
                 return new RoundRobinAlgorithm();
-            // Add more cases here for different algorithms
+            case 2:
+                return new EnvyCycleEliminationAlgorithm();
             default:
                 throw new IllegalArgumentException("Invalid algorithm ID: " + algorithmId);
         }
