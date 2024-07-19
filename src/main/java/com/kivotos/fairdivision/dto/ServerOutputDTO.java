@@ -12,6 +12,7 @@ public class ServerOutputDTO {
     private boolean isEF;
     private boolean isEF1;
     private boolean isEFX;
+    private String errorMessage;
 }
 
 

@@ -3,6 +3,7 @@ package com.kivotos.fairdivision.model;
 import com.kivotos.fairdivision.util.ValuationChecker;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,6 +13,7 @@ public class FairDivisionOutput {
     private boolean isEF;
     private boolean isEFX;
     private boolean isEF1;
+    private String errorMessage;
 
 
     public FairDivisionOutput(List<Allocation> allocations) {
@@ -25,6 +27,14 @@ public class FairDivisionOutput {
             this.isEFX = isEFX(allocations);
             this.isEF1 = this.isEFX || isEF1(allocations);
         }
+    }
+
+    public FairDivisionOutput(String errorMessage) {
+        this.allocations = new ArrayList<>();
+        this.isEF = false;
+        this.isEFX = false;
+        this.isEF1 = false;
+        this.errorMessage = errorMessage;
     }
 
     private boolean isEF(List<Allocation> allocations) {
@@ -76,12 +86,16 @@ public class FairDivisionOutput {
 
 
     private static Allocation getAllocationWithoutHighestValuedGood(Allocation allocation) {
+        if(allocation.getHighestValuedGood()==Integer.MIN_VALUE) return allocation;
+
         Allocation temp = new Allocation(allocation);
         temp.getGoodsList().remove(allocation.getHighestValuedGoodIndex());
         return temp;
     }
 
     private static Allocation getAllocationWithoutLowestValuedGood(Allocation allocation) {
+        if(allocation.getLowestValuedGood()==Integer.MAX_VALUE) return allocation;
+
         Allocation temp = new Allocation(allocation);
         temp.getGoodsList().remove(allocation.getLowestValuedGoodIndex());
         return temp;
