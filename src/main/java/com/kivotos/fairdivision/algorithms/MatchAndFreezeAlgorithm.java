@@ -50,7 +50,7 @@ public class MatchAndFreezeAlgorithm implements FairDivisionAlgorithm {
             checkFrozenAgents(frozenAgents,activeAgents,round);
 
             // Create bipartite adjacency matrix
-            boolean[][] adjacencyMatrix = createBipartiteAdjacencyMatrix(agents,goods, activeAgents, aValue);
+            boolean[][] adjacencyMatrix = createBipartiteAdjacencyMatrix(agents,goods, activeAgents, availableGoods, aValue);
 
             // Each array contains 2 elements, arr[0] the agent and arr[1] the item he gets
             List<int[]> maximumMatching = MaximumMatching.maxBPM(adjacencyMatrix,agents,goods);
@@ -101,13 +101,13 @@ public class MatchAndFreezeAlgorithm implements FairDivisionAlgorithm {
         return null;
     }
 
-    private boolean [][] createBipartiteAdjacencyMatrix(int agents, int goods, Set<Integer> activeAgents, int aValue ) {
+    private boolean [][] createBipartiteAdjacencyMatrix(int agents, int goods, Set<Integer> activeAgents,Set<Integer> availableGoods, int aValue ) {
         boolean[][] adjacencyMatrix = new boolean[agents][goods];
 
-        for (int i = 0; i < agents; i++) {
-            for (int j = 0; j < goods; j++) {
-                if(ValuationChecker.getValuationMatrixAtIndex(i,j)== aValue && isAgentActive(i,activeAgents)) {
-                    adjacencyMatrix[i][j] = true;
+        for (int agent: activeAgents) {
+            for (int good : availableGoods) {
+                if(ValuationChecker.getValuationMatrixAtIndex(agent,good)== aValue && isAgentActive(agent,activeAgents)) {
+                    adjacencyMatrix[agent][good] = true;
                 }
             }
         }
