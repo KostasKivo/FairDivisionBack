@@ -1,6 +1,7 @@
 package com.kivotos.fairdivision.algorithms;
 
 import com.kivotos.fairdivision.model.Allocation;
+import com.kivotos.fairdivision.model.FairDivisionInput;
 import com.kivotos.fairdivision.model.FairDivisionOutput;
 import com.kivotos.fairdivision.util.MaximumMatching;
 import com.kivotos.fairdivision.util.ValuationChecker;
@@ -10,7 +11,11 @@ import java.util.*;
 
 public class MatchAndFreezeAlgorithm implements FairDivisionAlgorithm {
     @Override
-    public FairDivisionOutput allocate(int agents, int goods, int[][] valuationMatrix) {
+    public FairDivisionOutput allocate(FairDivisionInput fairDivisionInput) {
+
+        int agents = fairDivisionInput.getAgentNumber();
+        int goods = fairDivisionInput.getGoodsNumber();
+        int[][] valuationMatrix = fairDivisionInput.getValuationMatrix();
 
         int [] valuesArray = findTwoValues(valuationMatrix);
 

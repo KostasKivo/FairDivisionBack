@@ -1,9 +1,6 @@
 package com.kivotos.fairdivision.algorithms.factory;
 
-import com.kivotos.fairdivision.algorithms.EnvyCycleEliminationAlgorithm;
-import com.kivotos.fairdivision.algorithms.FairDivisionAlgorithm;
-import com.kivotos.fairdivision.algorithms.MatchAndFreezeAlgorithm;
-import com.kivotos.fairdivision.algorithms.RoundRobinAlgorithm;
+import com.kivotos.fairdivision.algorithms.*;
 
 public class FairDivisionAlgorithmFactory {
 
@@ -15,6 +12,8 @@ public class FairDivisionAlgorithmFactory {
                 return new EnvyCycleEliminationAlgorithm();
             case 3:
                 return new MatchAndFreezeAlgorithm();
+            case 4:
+                return new LeximinPlusPlusAlgorithm();
             default:
                 throw new IllegalArgumentException("Invalid algorithm ID: " + algorithmId);
         }

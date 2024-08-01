@@ -25,7 +25,7 @@ public class FairDivisionService {
 
         FairDivisionAlgorithm algorithm = FairDivisionAlgorithmFactory.getAlgorithm(fairDivisionInput.getAlgorithmId());
 
-        FairDivisionOutput output = algorithm.allocate(fairDivisionInput.getAgentNumber(), fairDivisionInput.getGoodsNumber(), fairDivisionInput.getValuationMatrix());
+        FairDivisionOutput output = algorithm.allocate(fairDivisionInput);
 
         return fairDivisionOutputMapper.toServerOutputDTO(output);
     }
