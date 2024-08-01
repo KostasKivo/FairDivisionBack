@@ -1,9 +1,15 @@
 package com.kivotos.fairdivision.mapper;
 
 import com.kivotos.fairdivision.dto.WebsiteInputDTO;
+import com.kivotos.fairdivision.model.Allocation;
 import com.kivotos.fairdivision.model.FairDivisionInput;
+import com.kivotos.fairdivision.model.FairDivisionOutput;
+import com.kivotos.fairdivision.util.ValuationChecker;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface FairDivisionInputMapper {
@@ -13,6 +19,8 @@ public interface FairDivisionInputMapper {
     @Mapping(target = "valuationType", source = "valuationDropdownValue")
     @Mapping(target = "algorithmId", source = "algorithmDropdownValue")
     @Mapping(target = "valuationMatrix", expression = "java(convertValuations(dto.getValuationContainer(), dto.getAgentSliderValue(), dto.getGoodsSliderValue()))")
+    @Mapping(target = "leximinFirstAllocation", expression = "java(convertLeximinAllocations(dto.getLeximinFirstAllocation()))")
+    @Mapping(target = "leximinSecondAllocation", expression = "java(convertLeximinAllocations(dto.getLeximinSecondAllocation()))")
     FairDivisionInput toFairDivisionInput(WebsiteInputDTO dto);
 
     default int[][] convertValuations(String valuations, int agentNumber, int goodsNumber)  {
@@ -25,22 +33,23 @@ public interface FairDivisionInputMapper {
                 matrix[i][j] = Integer.parseInt(values[i * goodsNumber + j]);
             }
         }
+        ValuationChecker.setValuationMatrix(matrix);
+
         return matrix;
     }
 
-    default String convertMatrixToString(int[][] matrix) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                sb.append(matrix[i][j]);
-                if (j < matrix[i].length - 1) {
-                    sb.append(",");
-                }
+    default FairDivisionOutput convertLeximinAllocations( int[][] leximinAllocation) {
+        List<Allocation> allocationsList = new ArrayList<>();
+
+
+        for(int i=0; i<leximinAllocation.length;i++) {
+            Allocation allocation = new Allocation(i);
+            for(int j=0; j<leximinAllocation[i].length;j++) {
+                allocation.add(leximinAllocation[i][j], ValuationChecker.getValuationMatrix());
             }
-            if (i < matrix.length - 1) {
-                sb.append(",");
-            }
+            allocationsList.add(allocation);
         }
-        return sb.toString();
+
+        return new FairDivisionOutput(allocationsList);
     }
 }

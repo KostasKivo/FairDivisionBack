@@ -15,4 +15,6 @@ public class WebsiteInputDTO {
     private int valuationDropdownValue;
     private int algorithmDropdownValue;
     private String valuationContainer;
+    private int[][] leximinFirstAllocation;
+    private int[][] leximinSecondAllocation;
 }

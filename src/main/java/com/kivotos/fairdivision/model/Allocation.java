@@ -45,5 +45,9 @@ public class Allocation {
             this.lowestValuedGoodIndex = index;
         }
     }
+
+    public void addWithoutValuationMatrix(int item) {
+        this.goodsList.add(item);
+    }
 }
 

@@ -24,6 +24,11 @@ public class ValuationChecker {
         return totalValue;
     }
 
+    public static int[][] getValuationMatrix() {
+        return valuationMatrix;
+    }
+
+
     public static void setValuationMatrix(int[][] valuationMatrix) {
         ValuationChecker.valuationMatrix = valuationMatrix;
     }
