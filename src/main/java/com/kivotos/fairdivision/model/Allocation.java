@@ -46,8 +46,35 @@ public class Allocation {
         }
     }
 
-    public void addWithoutValuationMatrix(int item) {
-        this.goodsList.add(item);
+    public void recalculateIndexes(int[][] valuationMatrix) {
+        int agentId = this.getAgentId();
+        List<Integer> goodsList = this.getGoodsList();
+
+        int highestValuedGood = Integer.MIN_VALUE;
+        int highestValuedGoodIndex = -1;
+        int lowestValuedGood = Integer.MAX_VALUE;
+        int lowestValuedGoodIndex = -1;
+
+        for (int i = 0; i < goodsList.size(); i++) {
+            int item = goodsList.get(i);
+            int value = valuationMatrix[agentId][item];
+
+            if (value > highestValuedGood) {
+                highestValuedGood = value;
+                highestValuedGoodIndex = i;
+            }
+
+            if (value < lowestValuedGood) {
+                lowestValuedGood = value;
+                lowestValuedGoodIndex = i;
+            }
+        }
+
+        this.setHighestValuedGood(highestValuedGood);
+        this.setHighestValuedGoodIndex(highestValuedGoodIndex);
+        this.setLowestValuedGood(lowestValuedGood);
+        this.setLowestValuedGoodIndex(lowestValuedGoodIndex);
     }
+
 }
 

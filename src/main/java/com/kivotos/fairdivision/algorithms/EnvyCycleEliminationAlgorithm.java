@@ -36,7 +36,7 @@ public class EnvyCycleEliminationAlgorithm implements FairDivisionAlgorithm {
             // If there is no unenvied agent, find the cycle and change it
             if (unenviedAgentIndex == -1) {
                 List<Integer> envyCycle = findCycle(adjacencyMatrix);
-                resolveCycle(allocationsList, envyCycle);
+                resolveCycle(allocationsList, envyCycle, valuationMatrix);
                 adjacencyMatrix = createAdjacencyMatrix(allocationsList); // Recompute the adjacency matrix after resolving the cycle
                 unenviedAgentIndex = returnUnenviedAgentIndex(adjacencyMatrix); // Update the unenvied agent after resolving the cycle
             }
@@ -109,11 +109,11 @@ public class EnvyCycleEliminationAlgorithm implements FairDivisionAlgorithm {
 
         for (int i = 0; i < numAgents; i++) {
             if (findCycleUtil(i, adjacencyMatrix, visited, inStack, cycle)) {
-                Collections.reverse(cycle);
+                Collections.reverse(cycle); // Reverse to get the correct order of the cycle
                 return cycle;
             }
         }
-        return cycle;
+        return cycle; // Returns an empty list if no cycle is found
     }
 
     private boolean findCycleUtil(int v, int[][] adjacencyMatrix, boolean[] visited, boolean[] inStack, List<Integer> cycle) {
@@ -130,9 +130,13 @@ public class EnvyCycleEliminationAlgorithm implements FairDivisionAlgorithm {
         inStack[v] = true;
 
         for (int i = 0; i < adjacencyMatrix.length; i++) {
-            if (adjacencyMatrix[v][i] == 1 && findCycleUtil(i, adjacencyMatrix, visited, inStack, cycle)) {
-                cycle.add(v);
-                return true;
+            if (adjacencyMatrix[v][i] == 1) {
+                if (findCycleUtil(i, adjacencyMatrix, visited, inStack, cycle)) {
+                    if (!cycle.contains(v)) { // Only add the node if it's part of the cycle
+                        cycle.add(v);
+                    }
+                    return true;
+                }
             }
         }
 
@@ -140,7 +144,7 @@ public class EnvyCycleEliminationAlgorithm implements FairDivisionAlgorithm {
         return false;
     }
 
-    private void resolveCycle(List<Allocation> allocationsList, List<Integer> envyCycle) {
+    private void resolveCycle(List<Allocation> allocationsList, List<Integer> envyCycle, int [][] valuationMatrix) {
         if (envyCycle.isEmpty()) return;
 
         List<List<Integer>> tempAllocations = new ArrayList<>();
@@ -151,6 +155,11 @@ public class EnvyCycleEliminationAlgorithm implements FairDivisionAlgorithm {
         for (int i = 0; i < envyCycle.size(); i++) {
             int nextAgent = (i + 1) % envyCycle.size();
             allocationsList.get(envyCycle.get(i)).setGoodsList(tempAllocations.get(nextAgent));
+        }
+
+        // Recalculate indexes for each agent after reallocating goods
+        for (Allocation allocation : allocationsList) {
+            allocation.recalculateIndexes(valuationMatrix);
         }
     }
 
