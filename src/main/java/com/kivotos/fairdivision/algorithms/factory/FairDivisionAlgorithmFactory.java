@@ -14,6 +14,8 @@ public class FairDivisionAlgorithmFactory {
                 return new MatchAndFreezeAlgorithm();
             case 4:
                 return new LeximinPlusPlusAlgorithm();
+            case 5:
+                return new MaximumNashWelfareAlgorithm();
             default:
                 throw new IllegalArgumentException("Invalid algorithm ID: " + algorithmId);
         }
