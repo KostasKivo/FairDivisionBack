@@ -10,14 +10,16 @@ import java.util.List;
 public class FairDivisionOutput {
 
     private List<Allocation> allocations;
+    private int [][] valuationMatrix;
     private boolean isEF;
     private boolean isEFX;
     private boolean isEF1;
     private String errorMessage;
 
 
-    public FairDivisionOutput(List<Allocation> allocations) {
+    public FairDivisionOutput(List<Allocation> allocations, int [][] valuationMatrix) {
         this.allocations = allocations;
+        this.valuationMatrix = valuationMatrix;
 
         this.isEF = isEF(allocations);
         if (this.isEF) {
@@ -41,8 +43,8 @@ public class FairDivisionOutput {
         for (Allocation currentAllocation : allocations) {
             for (Allocation otherAllocation : allocations) {
                 if (currentAllocation.getAgentId() != otherAllocation.getAgentId()) {
-                    int currentValue = ValuationChecker.getValuation(currentAllocation.getAgentId(), currentAllocation.getGoodsList()); // v_i(A_i)
-                    int otherValue = ValuationChecker.getValuation(currentAllocation.getAgentId(), otherAllocation.getGoodsList());     // v_i(A_j)
+                    int currentValue = ValuationChecker.getValuation(currentAllocation.getAgentId(), currentAllocation.getGoodsList(),valuationMatrix); // v_i(A_i)
+                    int otherValue = ValuationChecker.getValuation(currentAllocation.getAgentId(), otherAllocation.getGoodsList(),valuationMatrix);     // v_i(A_j)
 
                     if (otherValue > currentValue) {
                         return false;
@@ -53,12 +55,12 @@ public class FairDivisionOutput {
         return true;
     }
 
-    public static boolean isEF1(List<Allocation> allocations) {
+    public boolean isEF1(List<Allocation> allocations) {
         for (Allocation currentAllocation : allocations) {
             for (Allocation otherAllocation : allocations) {
                 if (currentAllocation.getAgentId() != otherAllocation.getAgentId()) {
-                    int currentValue = ValuationChecker.getValuation(currentAllocation.getAgentId(), currentAllocation.getGoodsList());
-                    int otherValue = ValuationChecker.getValuation(currentAllocation.getAgentId(), getAllocationWithoutHighestValuedGood(otherAllocation).getGoodsList());
+                    int currentValue = ValuationChecker.getValuation(currentAllocation.getAgentId(), currentAllocation.getGoodsList(),valuationMatrix);
+                    int otherValue = ValuationChecker.getValuation(currentAllocation.getAgentId(), getAllocationWithoutHighestValuedGood(otherAllocation).getGoodsList(),valuationMatrix);
                     if (otherValue > currentValue) {
                         return false;
                     }
@@ -68,12 +70,12 @@ public class FairDivisionOutput {
         return true;
     }
 
-    public static boolean isEFX(List<Allocation> allocations) {
+    public boolean isEFX(List<Allocation> allocations) {
         for (Allocation currentAllocation : allocations) {
             for (Allocation otherAllocation : allocations) {
                 if (currentAllocation.getAgentId() != otherAllocation.getAgentId()) {
-                    int currentValue = ValuationChecker.getValuation(currentAllocation.getAgentId(), currentAllocation.getGoodsList());
-                    int otherValue = ValuationChecker.getValuation(currentAllocation.getAgentId(), getAllocationWithoutLowestValuedGood(otherAllocation).getGoodsList());
+                    int currentValue = ValuationChecker.getValuation(currentAllocation.getAgentId(), currentAllocation.getGoodsList(),valuationMatrix);
+                    int otherValue = ValuationChecker.getValuation(currentAllocation.getAgentId(), getAllocationWithoutLowestValuedGood(otherAllocation).getGoodsList(),valuationMatrix);
 
                     if (otherValue > currentValue) {
                         return false;

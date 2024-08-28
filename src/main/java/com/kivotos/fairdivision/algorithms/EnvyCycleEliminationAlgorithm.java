@@ -30,14 +30,14 @@ public class EnvyCycleEliminationAlgorithm implements FairDivisionAlgorithm {
         }
 
         for (int l = 0; l < goods; l++) {
-            int[][] adjacencyMatrix = createAdjacencyMatrix(allocationsList);
+            int[][] adjacencyMatrix = createAdjacencyMatrix(allocationsList,valuationMatrix);
             int unenviedAgentIndex = returnUnenviedAgentIndex(adjacencyMatrix);
 
             // If there is no unenvied agent, find the cycle and change it
             if (unenviedAgentIndex == -1) {
                 List<Integer> envyCycle = findCycle(adjacencyMatrix);
                 resolveCycle(allocationsList, envyCycle, valuationMatrix);
-                adjacencyMatrix = createAdjacencyMatrix(allocationsList); // Recompute the adjacency matrix after resolving the cycle
+                adjacencyMatrix = createAdjacencyMatrix(allocationsList,valuationMatrix); // Recompute the adjacency matrix after resolving the cycle
                 unenviedAgentIndex = returnUnenviedAgentIndex(adjacencyMatrix); // Update the unenvied agent after resolving the cycle
             }
 
@@ -61,18 +61,18 @@ public class EnvyCycleEliminationAlgorithm implements FairDivisionAlgorithm {
 
         }
 
-        return new FairDivisionOutput(allocationsList);
+        return new FairDivisionOutput(allocationsList,valuationMatrix);
     }
 
-    private int[][] createAdjacencyMatrix(List<Allocation> allocationList) {
+    private int[][] createAdjacencyMatrix(List<Allocation> allocationList, int [][] valuationMatrix) {
         int numAgents = allocationList.size();
         int[][] adjacencyMatrix = new int[numAgents][numAgents];
 
         for (int i = 0; i < numAgents; i++) {
             for (int j = 0; j < numAgents; j++) {
                 if (i != j) {
-                    int agentIValue = ValuationChecker.getValuation(allocationList.get(i).getAgentId(), allocationList.get(i).getGoodsList());
-                    int agentJValue = ValuationChecker.getValuation(allocationList.get(i).getAgentId(), allocationList.get(j).getGoodsList());
+                    int agentIValue = ValuationChecker.getValuation(allocationList.get(i).getAgentId(), allocationList.get(i).getGoodsList(),valuationMatrix);
+                    int agentJValue = ValuationChecker.getValuation(allocationList.get(i).getAgentId(), allocationList.get(j).getGoodsList(),valuationMatrix);
 
                     if (agentIValue < agentJValue) {
                         adjacencyMatrix[i][j] = 1;

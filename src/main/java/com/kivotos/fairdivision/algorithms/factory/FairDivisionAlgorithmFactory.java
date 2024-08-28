@@ -13,7 +13,7 @@ public class FairDivisionAlgorithmFactory {
             case 3:
                 return new MatchAndFreezeAlgorithm();
             case 4:
-                return new LeximinPlusPlusAlgorithm();
+//                return new LeximinPlusPlusAlgorithm();
             case 5:
                 return new MaximumNashWelfareAlgorithm();
             default:

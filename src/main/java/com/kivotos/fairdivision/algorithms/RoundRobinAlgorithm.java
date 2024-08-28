@@ -49,6 +49,6 @@ public class RoundRobinAlgorithm implements FairDivisionAlgorithm {
             availableGoods.remove(selectedGood);
         }
 
-        return new FairDivisionOutput(allocationsList);
+        return new FairDivisionOutput(allocationsList,valuationMatrix);
     }
 }

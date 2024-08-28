@@ -7,14 +7,7 @@ import java.util.List;
 @Data
 public class ValuationChecker {
 
-
-    private static int[][] valuationMatrix;
-
-    public ValuationChecker(int[][] valuationMatrix) {
-        ValuationChecker.valuationMatrix = valuationMatrix;
-    }
-
-    public static int getValuation(int agentId, List<Integer> goods) {
+    public static int getValuation(int agentId, List<Integer> goods, int [][] valuationMatrix) {
         int totalValue = 0;
 
         for (int good :goods) {
@@ -24,18 +17,7 @@ public class ValuationChecker {
         return totalValue;
     }
 
-    public static int[][] getValuationMatrix() {
-        return valuationMatrix;
-    }
-
-
-    public static void setValuationMatrix(int[][] valuationMatrix) {
-        ValuationChecker.valuationMatrix = valuationMatrix;
-    }
-
-    public static int getValuationMatrixAtIndex(int i,int j) {
+    public static int getValuationMatrixAtIndex(int i,int j, int [][] valuationMatrix) {
         return valuationMatrix[i][j];
     }
-
-
 }
