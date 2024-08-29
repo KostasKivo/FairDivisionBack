@@ -10,6 +10,4 @@ public class FairDivisionInput {
     private int algorithmId;
     private int[][] valuationMatrix;
     private boolean identicalValuation;
-    private FairDivisionOutput leximinFirstAllocation;
-    private FairDivisionOutput leximinSecondAllocation;
 }
