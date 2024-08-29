@@ -87,7 +87,7 @@ public class FairDivisionOutput {
     }
 
 
-    private static Allocation getAllocationWithoutHighestValuedGood(Allocation allocation) {
+    public static Allocation getAllocationWithoutHighestValuedGood(Allocation allocation) {
         if(allocation.getHighestValuedGood()==Integer.MIN_VALUE) return allocation;
 
         Allocation temp = new Allocation(allocation);
@@ -95,7 +95,7 @@ public class FairDivisionOutput {
         return temp;
     }
 
-    private static Allocation getAllocationWithoutLowestValuedGood(Allocation allocation) {
+    public static Allocation getAllocationWithoutLowestValuedGood(Allocation allocation) {
         if(allocation.getLowestValuedGood()==Integer.MAX_VALUE) return allocation;
 
         Allocation temp = new Allocation(allocation);
