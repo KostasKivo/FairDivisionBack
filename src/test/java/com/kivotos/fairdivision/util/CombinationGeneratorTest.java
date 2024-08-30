@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class CombinationGeneratorTest {
 
     @Test
-    void testGenerateAllAllocations_SingleGood() {
+    void testGenerateAllAllocations_SingleGood_TwoPlayers() {
         int[][] valuationMatrix = {
                 {1},
                 {1}
         };
 
-        List<List<Allocation>> allAllocations = CombinationGenerator.generateAllAllocations(1, valuationMatrix);
+        List<List<Allocation>> allAllocations = CombinationGenerator.generateAllAllocations(1, 2, valuationMatrix);
 
         assertEquals(2, allAllocations.size());
 
@@ -35,13 +35,13 @@ class CombinationGeneratorTest {
     }
 
     @Test
-    void testGenerateAllAllocations_TwoGoods() {
+    void testGenerateAllAllocations_TwoGoods_TwoPlayers() {
         int[][] valuationMatrix = {
                 {1, 2},
                 {2, 1}
         };
 
-        List<List<Allocation>> allAllocations = CombinationGenerator.generateAllAllocations(2, valuationMatrix);
+        List<List<Allocation>> allAllocations = CombinationGenerator.generateAllAllocations(2, 2, valuationMatrix);
 
         assertEquals(4, allAllocations.size());
 
@@ -58,13 +58,13 @@ class CombinationGeneratorTest {
     }
 
     @Test
-    void testGenerateAllAllocations_ThreeGoods() {
+    void testGenerateAllAllocations_ThreeGoods_TwoPlayers() {
         int[][] valuationMatrix = {
                 {1, 2, 3},
                 {3, 2, 1}
         };
 
-        List<List<Allocation>> allAllocations = CombinationGenerator.generateAllAllocations(3, valuationMatrix);
+        List<List<Allocation>> allAllocations = CombinationGenerator.generateAllAllocations(3, 2, valuationMatrix);
 
         assertEquals(8, allAllocations.size());
 
@@ -81,10 +81,10 @@ class CombinationGeneratorTest {
     }
 
     @Test
-    void testGenerateAllAllocations_EmptyValuationMatrix() {
+    void testGenerateAllAllocations_EmptyValuationMatrix_TwoPlayers() {
         int[][] valuationMatrix = {};
 
-        List<List<Allocation>> allAllocations = CombinationGenerator.generateAllAllocations(0, valuationMatrix);
+        List<List<Allocation>> allAllocations = CombinationGenerator.generateAllAllocations(0, 2, valuationMatrix);
 
         assertEquals(1, allAllocations.size());
 
@@ -96,13 +96,13 @@ class CombinationGeneratorTest {
     }
 
     @Test
-    void testGenerateAllAllocations_MultipleGoodsWithSameValue() {
+    void testGenerateAllAllocations_MultipleGoodsWithSameValue_TwoPlayers() {
         int[][] valuationMatrix = {
                 {1, 1, 1},
                 {1, 1, 1}
         };
 
-        List<List<Allocation>> allAllocations = CombinationGenerator.generateAllAllocations(3, valuationMatrix);
+        List<List<Allocation>> allAllocations = CombinationGenerator.generateAllAllocations(3, 2, valuationMatrix);
 
         assertEquals(8, allAllocations.size());
 
@@ -115,6 +115,54 @@ class CombinationGeneratorTest {
 
             int totalGoods = player1Allocation.getGoodsList().size() + player2Allocation.getGoodsList().size();
             assertEquals(3, totalGoods);
+        }
+    }
+
+    @Test
+    void testGenerateAllAllocations_TwoGoods_ThreePlayers() {
+        int[][] valuationMatrix = {
+                {1, 2},
+                {2, 1},
+                {1, 1}
+        };
+
+        List<List<Allocation>> allAllocations = CombinationGenerator.generateAllAllocations(2, 3, valuationMatrix);
+
+        assertEquals(9, allAllocations.size());
+
+        // Check that all possible combinations of goods are generated
+        for (List<Allocation> allocationGroup : allAllocations) {
+            assertEquals(3, allocationGroup.size());
+
+            int totalGoods = 0;
+            for (Allocation allocation : allocationGroup) {
+                totalGoods += allocation.getGoodsList().size();
+            }
+            assertEquals(2, totalGoods); // The total number of goods between all players should be 2
+        }
+    }
+
+    @Test
+    void testGenerateAllAllocations_ThreeGoods_ThreePlayers() {
+        int[][] valuationMatrix = {
+                {1, 2, 3},
+                {3, 2, 1},
+                {2, 3, 1}
+        };
+
+        List<List<Allocation>> allAllocations = CombinationGenerator.generateAllAllocations(3, 3, valuationMatrix);
+
+        assertEquals(27, allAllocations.size());
+
+        // Verify that all goods are allocated in every possible combination
+        for (List<Allocation> allocationGroup : allAllocations) {
+            assertEquals(3, allocationGroup.size());
+
+            int totalGoods = 0;
+            for (Allocation allocation : allocationGroup) {
+                totalGoods += allocation.getGoodsList().size();
+            }
+            assertEquals(3, totalGoods); // The total number of goods between all players should be 3
         }
     }
 }
