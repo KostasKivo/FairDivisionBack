@@ -7,16 +7,16 @@ import java.util.List;
 
 public class CombinationGenerator {
 
-    public static List<List<Allocation>> generateAllAllocations(int n, int m, int[][] valuationMatrix) {
+    public static List<List<Allocation>> generateAllAllocations(int goods, int agents, int[][] valuationMatrix) {
         List<List<Allocation>> allAllocations = new ArrayList<>();
         List<Allocation> currentAllocations = new ArrayList<>();
 
         // Initialize allocations for each player
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < agents; i++) {
             currentAllocations.add(new Allocation(i));
         }
 
-        generateAllocationsHelper(n, 0, currentAllocations, valuationMatrix, allAllocations);
+        generateAllocationsHelper(goods, 0, currentAllocations, valuationMatrix, allAllocations);
         return allAllocations;
     }
 
