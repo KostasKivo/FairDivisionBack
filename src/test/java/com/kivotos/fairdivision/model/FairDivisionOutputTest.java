@@ -49,6 +49,8 @@ class FairDivisionOutputTest {
         assertFalse(fairDivisionOutput.isEF());
         assertFalse(fairDivisionOutput.isEFX());
         assertFalse(fairDivisionOutput.isEF1());
+        assertFalse(fairDivisionOutput.isProp());
+        assertTrue(fairDivisionOutput.getNashWelfareValue() > 0);
         assertEquals("Error occurred", fairDivisionOutput.getErrorMessage());
     }
 
@@ -92,5 +94,11 @@ class FairDivisionOutputTest {
     void testEF1() {
         FairDivisionOutput fairDivisionOutput = new FairDivisionOutput(allocations, valuationMatrix);
         assertTrue(fairDivisionOutput.isEF1());
+    }
+
+    @Test
+    void testProp() {
+        FairDivisionOutput fairDivisionOutput = new FairDivisionOutput(allocations, valuationMatrix);
+        assertFalse(fairDivisionOutput.isProp());
     }
 }

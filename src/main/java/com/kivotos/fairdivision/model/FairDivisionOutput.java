@@ -1,5 +1,6 @@
 package com.kivotos.fairdivision.model;
 
+import com.kivotos.fairdivision.util.NashSocialWelfareHelper;
 import com.kivotos.fairdivision.util.ValuationChecker;
 import lombok.Data;
 
@@ -14,6 +15,8 @@ public class FairDivisionOutput {
     private boolean isEF;
     private boolean isEFX;
     private boolean isEF1;
+    private boolean isProp;
+    private double nashWelfareValue;
     private String errorMessage;
 
 
@@ -25,10 +28,14 @@ public class FairDivisionOutput {
         if (this.isEF) {
             this.isEFX = true;
             this.isEF1 = true;
+            this.isProp = true;
         } else {
             this.isEFX = isEFX(allocations);
             this.isEF1 = this.isEFX || isEF1(allocations);
+            this.isProp = isProp(allocations,valuationMatrix);
         }
+
+        this.nashWelfareValue = NashSocialWelfareHelper.calculateNashSocialWelfare(allocations,valuationMatrix);
     }
 
     public FairDivisionOutput(String errorMessage) {
@@ -82,6 +89,25 @@ public class FairDivisionOutput {
                     }
                 }
             }
+        }
+        return true;
+    }
+
+    public boolean isProp(List<Allocation> allocations,int [][] valuationMatrix) {
+        List<Integer> allGoods = new ArrayList<>();
+        for(int i=0;i<valuationMatrix[0].length;i++) {
+            allGoods.add(i);
+        }
+
+        int totalAgents = allocations.size();
+
+        for(Allocation allocation: allocations) {
+
+            int agentValueForAllGoods = ValuationChecker.getValuation(allocation.getAgentId(), allGoods, valuationMatrix );
+            int agentValueForBundle = ValuationChecker.getValuation(allocation.getAgentId(), allocation.getGoodsList(), valuationMatrix );
+
+            if(agentValueForBundle < agentValueForAllGoods / totalAgents)
+                return false;
         }
         return true;
     }
