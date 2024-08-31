@@ -9,6 +9,7 @@ import java.util.List;
 public class ServerOutputDTO {
 
     private List<Allocation> allocations;
+    private int [][] valuationMatrix;
     private boolean isEF;
     private boolean isEF1;
     private boolean isEFX;
