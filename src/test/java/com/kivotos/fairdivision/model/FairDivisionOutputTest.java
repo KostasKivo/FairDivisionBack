@@ -50,7 +50,7 @@ class FairDivisionOutputTest {
         assertFalse(fairDivisionOutput.isEFX());
         assertFalse(fairDivisionOutput.isEF1());
         assertFalse(fairDivisionOutput.isProp());
-        assertTrue(fairDivisionOutput.getNashWelfareValue() > 0);
+        assertTrue(fairDivisionOutput.getNashWelfareValue() == 0);
         assertEquals("Error occurred", fairDivisionOutput.getErrorMessage());
     }
 
