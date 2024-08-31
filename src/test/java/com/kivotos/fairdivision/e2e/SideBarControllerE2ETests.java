@@ -159,7 +159,7 @@ public class SideBarControllerE2ETests {
                 .andExpect(jsonPath("$.errorMessage").doesNotExist())
                 .andExpect(jsonPath("$.efx").value(true))
                 .andExpect(jsonPath("$.ef").value(false))
-                .andExpect(jsonPath("$.prop").value(true))
+                .andExpect(jsonPath("$.prop").value(false))
                 .andExpect(jsonPath("$.ef1").value(true))
 
                 .andExpect(jsonPath("$.allocations[0].agentId").value(0))

@@ -103,8 +103,8 @@ public class FairDivisionOutput {
 
         for(Allocation allocation: allocations) {
 
-            int agentValueForAllGoods = ValuationChecker.getValuation(allocation.getAgentId(), allGoods, valuationMatrix );
-            int agentValueForBundle = ValuationChecker.getValuation(allocation.getAgentId(), allocation.getGoodsList(), valuationMatrix );
+            double agentValueForAllGoods = ValuationChecker.getValuation(allocation.getAgentId(), allGoods, valuationMatrix );
+            double agentValueForBundle = ValuationChecker.getValuation(allocation.getAgentId(), allocation.getGoodsList(), valuationMatrix );
 
             if(agentValueForBundle < agentValueForAllGoods / totalAgents)
                 return false;
