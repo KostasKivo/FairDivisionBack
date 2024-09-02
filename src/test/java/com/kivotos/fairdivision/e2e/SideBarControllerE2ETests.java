@@ -205,7 +205,7 @@ public class SideBarControllerE2ETests {
                 .content(jsonPayload))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nashWelfareValue").value(0))
-                .andExpect(jsonPath("$.errorMessage").value("Not a 2-valued instance."))
+                .andExpect(jsonPath("$.errorMessage").value("Not a binary instance."))
                 .andExpect(jsonPath("$.efx").value(false))
                 .andExpect(jsonPath("$.ef").value(false))
                 .andExpect(jsonPath("$.prop").value(false))

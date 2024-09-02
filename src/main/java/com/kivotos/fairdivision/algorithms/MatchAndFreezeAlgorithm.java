@@ -20,7 +20,7 @@ public class MatchAndFreezeAlgorithm implements FairDivisionAlgorithm {
         int [] valuesArray = findTwoValues(valuationMatrix);
 
         if(valuesArray==null)
-            return new FairDivisionOutput("Not a 2-valued instance.");
+            return new FairDivisionOutput("Not a binary instance.");
 
         int aValue = valuesArray[0];
         int bValue = valuesArray[1];

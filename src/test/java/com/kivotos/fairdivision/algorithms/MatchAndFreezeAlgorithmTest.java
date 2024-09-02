@@ -66,7 +66,7 @@ public class MatchAndFreezeAlgorithmTest {
 
         FairDivisionOutput output = algorithm.allocate(fairDivisionInput);
 
-        assertEquals("Not a 2-valued instance.", output.getErrorMessage());
+        assertEquals("Not a binary instance.", output.getErrorMessage());
     }
 
     @Test
@@ -188,6 +188,6 @@ public class MatchAndFreezeAlgorithmTest {
         FairDivisionOutput output = algorithm.allocate(fairDivisionInput);
 
         // Three distinct values should result in an error message
-        assertEquals("Not a 2-valued instance.", output.getErrorMessage());
+        assertEquals("Not a binary instance.", output.getErrorMessage());
     }
 }
