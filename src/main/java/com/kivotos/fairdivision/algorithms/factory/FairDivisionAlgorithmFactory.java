@@ -16,6 +16,8 @@ public class FairDivisionAlgorithmFactory {
                 return new LeximinPlusPlusAlgorithm();
             case 5:
                 return new MaximumNashWelfareAlgorithm();
+            case 6:
+                return new IdenticalValuationAlgorithm();
             default:
                 throw new IllegalArgumentException("Invalid algorithm ID: " + algorithmId);
         }
